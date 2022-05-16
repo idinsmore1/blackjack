@@ -2,6 +2,7 @@ from random import shuffle
 
 
 class Deck:
+    possible_values = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
 
     def __init__(self):
         self.cards = self._generate_deck()
@@ -11,9 +12,10 @@ class Deck:
         deck = []
         suits = [u"\u2666", u"\u2665", u"\u2663", u"\u2660"]
         for suit in suits:
-            for i in range(2, 11):
-                deck.append(f'{i}{suit}')
-            for face in ['A', 'K', 'Q', 'J']:
-                deck.append((f'{face}{suit}'))
+            for val in Deck.possible_values:
+                deck.append(f'{val}{suit}')
         shuffle(deck)
         return deck
+
+    def deal(self):
+        pass
