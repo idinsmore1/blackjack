@@ -5,6 +5,13 @@ class Deck:
     numeric_values = ['2', '3', '4', '5', '6', '7', '8', '9', '10']
     face_values = ['J', 'Q', 'K', 'A']
     suits = [u"\u2666", u"\u2665", u"\u2663", u"\u2660"]
+    card_values = {}
+    for suit in suits:
+        for val in numeric_values:
+            card_values[f'{val}{suit}'] = int(val)
+        for face in ['J', 'Q', 'K']:
+            card_values[f'{face}{suit}'] = 10
+        card_values[f'A{suit}'] = 11
 
     def __init__(self):
         self.cards = Deck.generate_deck()
