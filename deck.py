@@ -2,20 +2,24 @@ import random
 
 
 class Deck:
-    possible_values = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
+    numeric_values = ['2', '3', '4', '5', '6', '7', '8', '9', '10']
+    face_values = ['J', 'Q', 'K', 'A']
+    suits = [u"\u2666", u"\u2665", u"\u2663", u"\u2660"]
 
     def __init__(self):
-        self.cards = self._generate_deck()
+        self.cards = Deck.generate_deck()
 
-
-    def _generate_deck(self):
+    @classmethod
+    def generate_deck(self):
         deck = []
-        suits = [u"\u2666", u"\u2665", u"\u2663", u"\u2660"]
-        for suit in suits:
-            for val in Deck.possible_values:
+        for suit in Deck.suits:
+            for val in Deck.numeric_values:
+                deck.append(f'{val}{suit}')
+            for val in Deck.face_values:
                 deck.append(f'{val}{suit}')
         random.shuffle(deck)
         return deck
+
 
     def deal_opening_hand(self):
         opening_hand = []
@@ -28,5 +32,5 @@ class Deck:
     def hit(self):
         return self.cards.pop(random.randrange(len(self.cards)))
 
-    def end_round(self):
-        self.cards = self._generate_deck()
+    def start_new_round(self):
+        self.cards = Deck.generate_deck()

@@ -1,9 +1,14 @@
 from deck import Deck
+from player import Player
 
 if __name__ == '__main__':
     deck = Deck()
     print(len(deck.cards))
-    player_hand = deck.deal_opening_hand()
-    dealer_hand = deck.deal_opening_hand()
-    print(player_hand, dealer_hand, len(deck.cards))
+    player = Player('player')
+    # dealer = Player('dealer')
+    player.hand = deck.deal_opening_hand()
+    # dealer.hand = deck.deal_opening_hand()
+    player.hand.append('A♥')
+    print(player.hand, len(deck.cards))
+    print(player.check_hand_value())
 
