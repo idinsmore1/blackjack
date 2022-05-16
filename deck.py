@@ -24,3 +24,9 @@ class Deck:
             opening_hand.append(self.cards.pop(ix))
             random.shuffle(self.cards)
         return opening_hand
+
+    def hit(self):
+        return self.cards.pop(random.randrange(len(self.cards)))
+
+    def end_round(self):
+        self.cards = self._generate_deck()
