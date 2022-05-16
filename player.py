@@ -11,6 +11,12 @@ class Player:
         self.hand_value = 0
         self.current_bet = None
 
+    def add_card_to_hand(self, new_card):
+        self.hand.append(new_card)
+
+    def update_hand_value(self):
+        self.hand_value = self.check_hand_value()
+
     def check_hand_value(self):
         card_vals = []
         for card in self.hand:
@@ -22,10 +28,43 @@ class Player:
                     card_vals[index] = 1
                     current_sum = sum(card_vals)
                     break
+
         return current_sum
 
-    def make_bet(self, bet):
-        self.current_bet = bet
-        self.money = self.money - bet
+    def decide_to_hit(self):
+        choice = input('Would you like to hit or stay? ')
+        choice = choice.strip().lower()
+        if choice not in ['hit', 'stay']:
+            print('That is not a valid option')
+            self.decide_to_hit()
+        if choice == 'hit':
+            return True
+        elif choice == 'stay':
+            return False
+
+    def make_bet(self):
+        bet = int(input('Place your bet: '))
+        if bet < 1:
+            print("Minimum bet is $1.")
+            self.make_bet()
+        elif bet > self.money:
+            print("You cannot bet more money than you currently have.")
+            self.make_bet()
+        else:
+            self.current_bet = bet
+
+    def tie_bet(self):
+        self.current_bet = 0
+
+    def lose_bet(self):
+        # Subtract your bet from your money pool, and set current bet to 0
+        self.money -= self.current_bet
+        self.current_bet = 0
+
+    def win_bet(self, multiplier):
+        # Add winnings to your money pool, multiply if you win on opening hand
+        winnings = round(self.current_bet * multiplier, 2)
+        self.money += winnings
+
 
 
