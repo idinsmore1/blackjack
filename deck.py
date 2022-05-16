@@ -1,4 +1,4 @@
-from random import shuffle
+import random
 
 
 class Deck:
@@ -14,8 +14,13 @@ class Deck:
         for suit in suits:
             for val in Deck.possible_values:
                 deck.append(f'{val}{suit}')
-        shuffle(deck)
+        random.shuffle(deck)
         return deck
 
-    def deal(self):
-        pass
+    def deal_opening_hand(self):
+        opening_hand = []
+        for i in range(2):
+            ix = random.randrange(len(self.cards))
+            opening_hand.append(self.cards.pop(ix))
+            random.shuffle(self.cards)
+        return opening_hand
