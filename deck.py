@@ -27,7 +27,6 @@ class Deck:
         random.shuffle(deck)
         return deck
 
-
     def deal_opening_hand(self):
         opening_hand = []
         for i in range(2):

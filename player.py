@@ -9,7 +9,8 @@ class Player:
         self.money = Player.starting_money
         self.hand = []
         self.hand_value = 0
-        self.current_bet = None
+        self.current_bet = 0
+        self.has_won = False
 
     def add_card_to_hand(self, new_card):
         self.hand.append(new_card)
@@ -43,7 +44,10 @@ class Player:
             return False
 
     def make_bet(self):
-        bet = int(input('Place your bet: '))
+        bet = input('Place your bet: ')
+        if bet.isnumeric() is False:
+            raise ValueError('Bet must be numeric')
+        bet = float(bet)
         if bet < 1:
             print("Minimum bet is $1.")
             self.make_bet()
@@ -53,18 +57,19 @@ class Player:
         else:
             self.current_bet = bet
 
-    def tie_bet(self):
-        self.current_bet = 0
-
     def lose_bet(self):
         # Subtract your bet from your money pool, and set current bet to 0
         self.money -= self.current_bet
-        self.current_bet = 0
 
-    def win_bet(self, multiplier):
+    def win_bet(self, multiplier=1):
         # Add winnings to your money pool, multiply if you win on opening hand
         winnings = round(self.current_bet * multiplier, 2)
         self.money += winnings
+        self.has_won = True
+
+    def end_round(self):
+        self.current_bet = 0
+        self.has_won = False
 
 
 
